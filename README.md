@@ -3,7 +3,7 @@
 
 ## First of All
 
- - 遇到问题若解决不了（先google），请在 GitHub 上提交 [issue][1] :metal:
+ - 遇到问题若解决不了（先google），请在 GitHub 上提交issue :metal:
  - 每天结束之前都要在这个git仓库里面提issue，有例子可看，嗯！是**每天**。（仓库里面有格式例子哦）:clap::clap:
  - 每周之后，请把每周学习到的东西整理成Mark Down，每周上传自己的学习笔记，也可以把自己写的demo源码上传到本 repo 对应自己创的文件夹. 例子请看 Week1 文件夹。:notes:
  - 注意培养正确的代码规范，具体代码规范参考 [`this`](https://github.com/2018-TopView-FrontEnd/JavaScript-Code-Standard)
