@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>grid布局测试</title>
+</head>
+
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    body,
+    html {
+        height: 100%;
+        width: 100%;
+    }
+
+    h1 {
+        padding-top: 20px;
+    }
+
+    h3 {
+        padding:10px;
+    }
+
+    #grid-container {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: 250px 1fr 2fr;
+        text-align: center;
+    }
+
+    .box-container {
+        height: 100%;
+        display: table;
+    }
+
+    ::selection {
+        background-color:rgb(255, 251, 245);
+    }
+    #div1 {
+        background-color: aquamarine;
+        transition: 2s;
+    }
+
+    #div2 {
+        background-color: lightsalmon;
+        /* grid-row-start:2; */
+        /* grid-column-start:2; */
+        /* grid-column-end: span 2; */
+        transition: 2s;
+    }
+
+    #div3 {
+        background-color: lightgreen;
+        /* grid-column-start: 3; */
+        transition: 2s;
+    }
+
+    .box {
+        display: table-cell;
+        vertical-align: middle;
+    }
+    /* .test-box {
+        color:white;
+        background-color:black;
+    } */
+</style>
+
+<body>
+    <div id="grid-container">
+        <div id="div1" class="box-container">
+            <div class="box">
+                <h1>Div1</h1>
+                <h3>250px</h2>
+                <p>我只有固定的250px宽</p>
+            </div>
+        </div>
+        <!-- <div class="box-container test-box">
+            <div class="box">
+                <h1>Test box1</h1>
+                <p>我是后来加入的</p>
+            </div>
+        </div> -->
+        <div id="div2" class="box-container">
+            <div class="box">
+                <h1>Div2</h1>
+                <h3>1fr</h2>
+                <p>我是div3的一半宽</p>
+            </div>
+        </div>
+        <div id="div3" class="box-container">
+            <div class="box">
+                <h1>Div3</h1>
+                <h3>2fr</h2>
+                <p>我是div2的两倍宽</p>
+            </div>
+        </div>
+        <!-- <div class="box-container test-box">
+            <div class="box">
+                <h1>Test box2</h1>
+                <p>我是后来加入的</p>
+            </div>
+        </div>
+        <div class="box-container test-box">
+            <div class="box">
+                <h1>Test box3</h1>
+                <p>我是后来加入的</p>
+            </div>
+        </div>
+             -->
+    </div>
+</body>
+<script>
+    var div1 = document.getElementById("div1");
+    var div2 = document.getElementById("div2");
+    var div3 = document.getElementById("div3");
+
+    var t = setInterval(function(){
+        var a = Math.floor(Math.random() * 255);
+        var b = Math.floor(Math.random() * 255);
+        var c = Math.floor(Math.random() * 255);
+        var d = Math.floor(Math.random() * 255);
+        var e = Math.floor(Math.random() * 255);
+        var f = Math.floor(Math.random() * 255);
+        var g = Math.floor(Math.random() * 255);
+        var h = Math.floor(Math.random() * 255);
+        var i = Math.floor(Math.random() * 255);
+        if((a <= 90 && b <= 90) 
+        || (a <= 90 && c <= 90)
+        || (b <= 90 && c <= 90)){
+            div1.style.color = "white";
+        } else {
+            div1.style.color = "";
+        }
+        if((d <= 90 && e <= 90) 
+        || (d <= 90 && f <= 90)
+        || (e <= 90 && f <= 90)){
+            div2.style.color = "white";
+        } else {
+            div2.style.color = "";
+        }
+        if((g <= 90 && h <= 90) 
+        || (g <= 90 && i <= 90)
+        || (h <= 90 && i <= 90)){
+            div3.style.color = "white";
+        } else {
+            div3.style.color = "";
+        }
+
+        div1.style.backgroundColor = "rgb(" +　a + ',' + b + "," + c + ")";
+        div2.style.backgroundColor = "rgb(" +　d + ',' + e + "," + f + ")";
+        div3.style.backgroundColor = "rgb(" +　g + ',' + h + "," + i + ")";
+    },2000);
+</script>
+</html>

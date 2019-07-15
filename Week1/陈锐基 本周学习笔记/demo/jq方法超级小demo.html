@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    
+    body {
+      background-color: #4ce4e9a2;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    span {
+      padding-right: 2px;
+    }
+
+    .third-item {
+      color: #148f71;
+    }
+
+    li {
+      padding: 4px;
+      width:90%;
+      margin:0 auto;
+      transition: all 0.1s;
+    }
+
+    li:hover {
+      transform: scale(1.07);
+      background-color: #67eaca;
+    }
+
+    .box {
+      background-color:#fcf9ecf8;
+      margin:5px;
+      border-radius: 5px;
+      padding:3px;
+      border:#67eaca 1px solid;
+      width:20%;
+      float: left;
+    }
+
+    .all-container {
+      width:90%;
+      margin:0 auto;
+      margin-top:20px;
+    }
+
+  </style>
+</head>
+
+<body>
+  <img src="白云.png" alt="cloud" style="position: absolute; width:40%; top:-5%; z-index: -1;">
+  <img src="白云.png" alt="cloud" style="position: absolute; width:46%; right:20%; top:4%; z-index: -1;">
+  <img src="白云.png" alt="cloud" style="position: absolute; width:30%; right:3%; top:0%; z-index: -1;">
+  <div class="all-container">
+      <div class="text-center box">
+        <h4>.nextAll().addBack()</h4>
+        <ul>
+          <li>list item 1</li>
+          <li>list item 2</li>
+          <li id="third-item_1" class="third-item"><span class="glyphicon glyphicon-chevron-right"></span>list item 3</li>
+          <li>list item 4</li>
+          <li>list item 5</li>
+        </ul>
+      </div>
+      <div class="text-center box">
+        <h4>.nextAll().add()</h4>
+        <ul>
+          <li>list item 1</li>
+          <li>list item 2</li>
+          <li id="third-item_2" class="third-item"><span class="glyphicon glyphicon-chevron-right"></span>list item 3</li>
+          <li>list item 4</li>
+          <li>list item 5</li>
+        </ul>
+      </div>
+      <div class="text-center box">
+        <h4>.nextAll().add()</h4>
+        <ul>
+          <li>list item 1</li>
+          <li>list item 2</li>
+          <li id="third-item_3" class="third-item"><span class="glyphicon glyphicon-chevron-right"></span>list item 3</li>
+          <li>list item 4</li>
+          <li>list item 5</li>
+        </ul>
+      </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.4.0.js"></script>
+  <script>
+    $('#third-item_1').nextAll().addBack().css('background-color', '#b0f4e6');
+    $('#third-item_2').nextAll().add().css('background-color', '#b0f4e6');
+    $('#third-item_3').after('<li style="background-color:#b0f4e6;">Append list item</li>');
+  </script>
+</body>
+
+</html>
