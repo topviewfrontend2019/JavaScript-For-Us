@@ -1,0 +1,388 @@
+ECMA是标准，js是实现
+es6（es2015）兼容性挺好，ie10+
+兼容其他，js转换
+在线转换
+提前编译（佳）
+//babel == browser.js
+<script src = 'browser.js' charset = 'utf-8'></script>
+<script type = 'text/babel'>//告诉浏览器我是Babel
+
+变量
+var 可以重复声明，无法限制修改，没有块级作用域，原生的只有函数才能限制作用域,函数级
+for(var i=0;i<aBtn.length;i++) {
+    (function(i){
+        aBtn[i].onclick=function(){
+            
+        };
+    })(i);
+}
+//let就不用
+for(let i=0;i<aBtn.length;i++) {
+    aBtn[i].onclick=function(){
+            
+        };
+}
+
+函数作用域和块级作用域根本没有直接关系,函数作用域在ES5和ES6作用完全一样,你的变量不论是使用var声明还是使用了let ,const声明在外部都是不可以访问的. 而块级作用域指的就是使用 if () { }; while ( ) { } ...这些语句所形成的语句块 , 并且其中变量必须使用let或const声明(否则就不是块级作用域了),保证了外部不可以访问语句块中的变量.
+let不能重复声明，变量-可以修改，块级作用域
+const不能重复声明，常量-不能修改，块级作用域
+函数-箭头函数
+如果只有一个参数，（）可以省
+如果只有一个return，{}可以省
+修正this，this相对正常点
+function () {
+    
+}
+变成
+()=>{
+    
+}
+函数的参数
+参数扩展/展开
+默认参数
+function show(a,b=5){
+    
+}
+参数扩展
+
+收集剩余的参数
+function show(a,b,...args){}//args名字可以随便取
+
+** Rest Parameter必须是最后一个 **
+
+展开数组
+** 展开后的效果，跟直接把数组的内容写在这一样**
+
+let arr1=[1,2,3];
+let arr2=[5,6,7];
+let arr=[...arr1,...arr2];
+** 把数组展开赋值的话是不行的**
+
+默认参数 不传用默认，传了就用你的
+解构赋值
+左右两边结构必须一样
+右边必须是个东西,合法的对象
+声明和赋值不能分开（必须在一句话里完成）
+let [a,b,c]=[1,2,3];
+let {a,c,d}={a:12,c:5,d:6};//json
+let [json,arr,num,str]=[{a:12,b:5},[12,5,8],8,'csxd'];
+数组
+map映射 一个对一个
+let arr=[12,5,8];
+let result=arr.map(item=>item*2);
+)
+reduce汇总 一堆出来一个
+//求和
+let arr=[12,5,8,444];
+let result = arr.reduce(function(tmp,item,index){
+    return tmp+item;
+})//tmp是加起来的临时中间值，item是下一次要加的值（从5开始），index是迭代的第几次，最后会返回一个最终加起来的结果
+//求平均值
+let arr=[12,5,8,444];
+let result = arr.reduce(function(tmp,item,index){
+if(index!=arr.length-1){
+ return tmp+item;   
+}else{
+ return (tmp+item)/arr.length; 
+}
+   
+});
+
+filter过滤器 留一部分删一部分
+let arr=[12,5,8,444];
+let result = arr.filter(item=>item%3==0;//布尔值);
+forEach循环（迭代）
+let arr=[12,5,8,444];
+arr.forEach((item,index)=>{
+    alert(index+':'+item);
+});
+字符串
+多了两个新方法，正则差不多
+startsWith以什么开头
+
+let str='http://qq';
+str.startsWith('http://')//布尔
+endsWith以什么结尾，和上面差不多用法
+
+字符串模板
+字符串连接，直接把东西塞到字符串里面${东西}和可以折行 `
+
+let a=12;
+let str=`a${a}bc`;//把12塞进字符串
+let title='标题';
+let content='内容';
+let str=`<div><h1>${title}</h1><p>${content}</p></div>`;
+es6的面向对象
+class关键字，构造器和类分开了
+class里面直接加方法
+class User{
+    constructor(name,pass){
+        this.name=name;
+        this.pass=pass;
+    }
+    showName(){
+        alert(this.name);
+    }
+}
+var u1=new User('blue','123456');//类
+u1.showName();
+继承
+super-超类==父类
+
+class User{
+    constructor(name,pass){
+        this.name=name;
+        this.pass=pass;
+    }
+    showName(){
+        alert(this.name);
+    }
+    showPass(){
+        alert(this.pass);
+    }
+}
+//VipUser扩展自User
+class VipUser extends User{
+    constructor(name,pass,level){
+        super(name,pass);//我的父类
+        this.level=level;//加上我自己的
+    }
+    showLevel(){
+        alert(this.level);//加上的新东西
+    }
+}
+var u1=new VipUser('blue','123456',3);//类
+u1.showName();
+面向对象的应用-React(先跳过)
+JSON
+JSON对象
+JSON.stringify
+
+JSON.parse
+
+JSON.stringify({a:12,b:5})=>'{"a":12,"b":5}'
+JSON.parse('{"a":12,"b":5}')=>{a:12,b:5}
+简写
+名字和值（key和value）一样，留一个就好
+
+方法 ：function一块删
+
+show:function(){...}
+
+show(){...}
+
+let a=122;
+let b=5;
+let json={a,b,c:55};//名字和值一样的时候可以不写
+let json={a:12,b:5};
+let str='http://baidu.com/path/user?data='+encodeURIComponent(JSON.stringify(json));
+json的标准写法：只能用双引号，所有名字都必须用引号包起来
+
+{"a":"abc","b":5}
+Promise-承诺，封装异步操作
+异步：操作之间没啥关系，同时进行多个操作，代码更复杂
+同步：同时只能做一件事，代码简单
+Promise--消除异步操作，用同步一样的方式，来书写异步代码
+Promise.all
+Promise.race竞速
+//前面要调用jq文件
+let p1=new Promise(function(resolve,reject){
+    //异步代码
+    //resolve成功了
+    //reject失败了
+    $.ajax({
+       url:'data/arr.txt',
+       dataType:'json',
+       success(arr){
+           resolve(arr);
+       }
+       error(err){
+           reject(err);
+       }
+    })
+});
+p1.then(function(){},function(){});//第一个函数是调用成功的时候的函数，第二个函数是调用失败的时候的函数
+//上面还可以再弄个p2，
+Promise.all([p1,p2]).then(function(arr){
+    let[res1,res2]=arr;
+    alert(res1);//p1里的是数组
+    alert(res2);//p2里的是json对象
+},function(){});//all意思是要两个都成功,接受数组
+//自己封的
+function createPromise(url){
+    return new Promise(function(resolve,reject){
+    //异步代码
+    //resolve成功了
+    //reject失败了
+    $.ajax({
+       url,
+       dataType:'json',
+       success(arr){
+           resolve(arr);
+       }
+       error(err){
+           reject(err);
+       }
+    })
+})
+}
+Promise.all([createPromise('data/arr.txt'),createPromise('data/json.txt')]).then(function(arr){
+    let[res1,res2]=arr;
+    alert(res1);//p1里的是数组
+    alert(res2);//p2里的是json对象
+},function(){});//all意思是要两个都成功,接受数组
+//jq自带promise，但是要高版本3.1以上
+Promise.all([$.ajax({url: 'data/arr.txt',dataType:'json'}),$.ajax({url: 'data/json.txt',dataType:'json'})]).then(function(results){
+    let[arr,json]=results;
+    alert('');
+    
+},function(){alert('');});//all意思是要两个都成功,接受数组
+
+
+
+
+有了promise之后的异步
+Promise.all([$.ajax(),$.ajax()]).then(results=>{
+//对了
+    
+},err=>{
+    //错了
+});
+//race同时读五个资源，谁先来了我读谁，只要有一个成功了就行
+Promise.race([
+$.ajax({url:'http://'}),
+$.ajax({url:'http://'}),
+$.ajax({url:'http://'}),
+$.ajax({url:'http://'})
+]);
+generator--生成器，是一种特殊的函数,有一个*贴function或者show或者谁都不贴独自放中间都可以
+普通函数：一路到底
+generator函数：中间能停，yield暂时放弃执行这个函数,踹一脚走一步
+generator函数本质能够生成很多小函数，走一步执行一个小函数
+function *函数(){ 代码... yield ajax(xxx);//暂停一下，获取数据 代码... }
+
+function *show(){
+   alert('a');
+   yield;//停
+   alert('b');
+}
+let genObj=show();//创建了一个generator对象，要弄一个对象，不能直接执行函数里的代码
+genObj.next();//a
+genObj.next();//b
+yield放弃执行，可以传参也可以返回，通过yield传参的时候，第一个next是废的，传什么都没有用，可以解决异步操作
+yield传参
+function *show(){
+   alert('a');
+   let a=yield;//停
+   alert('b');
+   alert(a);
+}
+let gen=show();
+gen.next(12);//执行yield之前的，故a不能得到12//没法给yield传参，若是要给第一个过程传参，就要在show里面传入两个参数，然后写入yield之前
+function *show(num1,num2){alert(`${num1},${num2}`);
+gen.next(5);//执行yield左边的，故a得到5
+yield返回一个中间的结果
+最初的结果：函数参数|中间的结果：yield|最终的结果：return（最后一道工序没有yield，想返回要靠return）
+
+function *show(){
+    alert('a');
+    yield 12;
+    alert('b');
+    return 55;
+}
+let gen=show();
+let res1=gen.next();
+console.log(res1);//{value:12,done:false}
+let res2=gen.next();
+console.log(res2);//{value:55,done:true}
+function *炒菜（菜市场买回来的）{
+    洗菜-》洗好的菜
+    let 干净的菜=yield 洗好的菜；
+    干净的菜-》切-》丝
+    let 切好的菜=yield 丝；
+    切好的菜-》炒-》熟的菜
+    return 熟的菜；
+}
+generator实例1：runner，可以像写同步操作一样写异步操作，generator不能写箭头函数
+cnpm i yield-runner-blue
+runner要传一个generetor作为参数
+runner(function *(){
+    let data1=yield $.ajax({url:'data/1.txt',dataType:'json'});
+    let data2=yield $.ajax({url:'data/2.txt',dataType:'json'});
+    let data3=yield $.ajax({url:'data/3.txt',dataType:'json'});
+    
+})
+
+异步：
+1.回调地狱
+2.Promise---一次读一堆
+3.generator---逻辑性，本质是对Promise的一个封装
+其中，带逻辑的Promise跟回调地狱复杂程度差不多
+
+
+//带逻辑的generator比其他方法方便
+runner(function *(){
+    let userData=yield $.ajax({url:'getUserData',dataType:'json'});
+    if(userData.type=='VIP'){
+        let items = yield $.ajax({url:'getVIPItems',dataType:'json'});
+    }else{
+        let items = yield $.ajax({url:'getItems',dataType:'json'});
+    }
+    //生成。。。
+})
+generator实例2：KOA（先跳过）
+nodejs引入另一个库的---require
+ES7和ES8的预览
+数组：includes数组是否包含某个东西
+let arr=[12,5,6];
+alert(arr.includes(6));//true
+数组 keys/values/entries
+--------------------数组------------json
+
+1.for...in--下标（key）--- key
+2.for...of-- 值（value）---不能用于json
+json是一个不可迭代的对象，不是一个迭代器
+for of 的
+
+keys=>所有的key拿出来 0，1，2，3，4，...
+values=>所有的values拿出来12，5，8，99，。。。暂时还不支持
+entries=>所有的key-value对拿出来{key:0,value:12}，{key:1,value:5}，...*entry实体
+let arr=[12,5,8,99];
+for(let entry of arr.entries()){
+    alert(entry);
+}
+//for(let [key,value] of arr.entries()){
+    alert(`${key}=${value}`);
+}
+幂 Math.pow(3,8)//3的8次方//新的方法3**8
+padStart从起始位给我补充几个位
+padEnd往后给我补充几个位
+console.log('('+'abc'.padEnd(10)+')');
+console.log('('+'abc'.padEnd(10,'0')+')');//用0来补
+
+语法容忍度
+数组容忍度 [12,6,8]=>[12,6,8,]ES6
+参数容忍度 function show(a,b,c,){}ES7
+代替generator里的yield，即async和await
+async function show(){
+    alert('a');
+    await;
+    alert('b');
+}
+//ES7的,不用依赖于外部的runner，统一、性能
+async function readData(){
+    let data1=await $.ajax({url:'data/1.txt',dataType:'json'});
+    let data2=await $.ajax({url:'data/2.txt',dataType:'json'});
+    let data3=await $.ajax({url:'data/3.txt',dataType:'json'});
+    
+}
+
+
+//generator不能写成箭头函数，async可以写成箭头函数
+let readData=async()=>{
+    let data1=await $.ajax({url:'data/1.txt',dataType:'json'});
+    let data2=await $.ajax({url:'data/2.txt',dataType:'json'});
+    let data3=await $.ajax({url:'data/3.txt',dataType:'json'});
+    
+}
+readData();
