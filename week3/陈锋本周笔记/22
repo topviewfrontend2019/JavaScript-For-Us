@@ -1,0 +1,125 @@
+# 红宝书22章
+### 安全监测
+
+> 由于原本js不支持json对象，大量开发者使用第三方库，导致难以判断对象是否是原生
+
+#### instanceof监测
+- 被监测与监测对象需在同一个全局作用域
+```
+var isArray = value instanceof Array
+//检查value是否在array原型链上，两者需要在同一全局作用域
+```
+#### 使用toString方法监测
+- 使用该方法与全局作用域无关
+- Object下该方法会返回一个[object NativeConstructorName（源构造函数名）]格式的字符串
+```
+function isArray() {
+	return Object.prototype.toString().call(value) == "[object Array]";
+	//如果是原生数组则会返回true 
+}
+```
+### 构造函数的安全使用
+- 如果不使用new关键字运行构造函数，则和普通的函数一样，this会映射到window
+```
+//使用instanceof监测来安全使用构造函数
+function Person() {
+	if(this instanceof Person) {
+		this.name = name;
+		this.age = age;
+		this.job = job;
+	}else {
+		//如果非原型链上的使用new关键字构建实例
+		return new Person(name,age,job);
+	} 
+}
+```
+### 使用懒载入函数减少if判断
+- 使用方法
+```
+function creatXHR() {
+	if(判断条件) {
+		//符合情况一重新给函数重新赋值
+		creatXHR = function() {
+			return new xxxxx();
+		};	
+	}else if(判断条件) {
+		//符合情况二重新给函数赋值
+		creatXHR = function() {
+			return new xxxxx();
+		}
+	} 
+}
+```
+- 懒载入函数的意义
+	- 懒载入函数每个if只会执行一次 
+	- 第一加载可能会慢一些，但是由于函数经过了覆盖，所以之后再使用由于函数被覆盖了就无需再进行if判断了直接使用最后一次判断的结果
+### 函数绑定
+#### fn.prototype.call()方法
+-  ```obj1.call（obj2,[传入的参数]）```
+	- 通俗来说该方法是将obj1的方法拿到obj2上使用
+##### 用法
+- 利用call绑定函数，使某个函数的this对象修改为另一个对象，那么另一个函数就可以使用该函数的方法
+```
+ function obj1(name) {
+        this.name = name;
+        this.sayName = function() {
+            console.log(this.name);
+        }
+    }
+    function obj2(name) {
+        this.name = "obj2"
+    }
+    obj1.call(obj2,"obj1");
+    obj2.sayName();//使用了obj1中的方法打印出obj2
+ //这里的call使obj2能使用obj1中的方法；
+```
+- 利用call使某个函数能够继承另一个函数的属性方法
+```
+	function obj3() {
+        this.sayName = function(name) {
+            console.log("my name is "+ name);
+        }
+    }
+    function obj4() {
+        obj3.call(this);//这里时obj4能够拥有obj3中的方法
+    }
+    var obj = new obj4;
+    obj.sayName("chenfeng");//my name is chenfeng
+```
+#### fn.prototype.applay()方法 
+- apply方法和call方法用法一致只不过第二个参数为参数数组，多参数时使用apply方法更实用
+#### 原理
+```
+// 第一版
+Function.prototype.call2 = function(context) {
+    // 首先要获取调用call的函数，用this可以获取
+    context.fn = this;
+    context.fn();
+    delete context.fn;
+}
+
+// 测试一下
+var foo = {
+    value: 1
+};
+
+function bar() {
+    console.log(this.value);
+}
+
+bar.call2(foo); // 1
+//这里calll2传入一个foo利用给foo临时加上this这个方法或属性，调用完成后再删除
+``` 
+### 函数科里华
+#### 步骤
+- 调用另一个函数并未它传入要柯里化的函数和必要参数
+```
+function(fn) {
+	var args = Array.prototype.slice.call(arguments, 1);//用call使arguments对象可以使用call方法，或得第一个参数
+	return function() {
+		var innerArgs = Array.prototype.slice.call(arguments);//获取到所有参数
+		var finalArgs = args.concat(innerArgs);
+		return fn.apply(null,finalArgs);//aplly第一个参数为null时指向window或者global
+	}
+}
+```
