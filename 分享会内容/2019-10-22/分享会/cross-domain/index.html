@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            background: url('./038e40255deb7a20000015995782b41.jpg');
+            background-size: cover;
+        }
+        #search {
+            display: block;
+            height: 40px;
+            width: 460px;
+            margin: 100px auto 0;
+            text-indent: 1em;
+            outline: none;
+            font-size: 18px;
+            border-radius: 5px 5px 0px 0px;
+        }
+        #content {
+            width: 423px;
+            margin: 0 auto;
+            text-decoration: none;
+            list-style: none;
+            border: 2px solid #0f0c024a;;
+            display: none;
+        }
+        #content li {
+            margin-left: -30px;
+        }
+        #content li:hover {
+            background: #7c6868;
+        }
+        #search::after {
+            content: ' ';
+            display: block;
+            width: 30px;
+            height: 30px;
+            border: 1px solid blue;
+        }
+        a {
+           color: #0dd683;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" name="" id="search">
+    <ul id="content">
+    </ul>
+    <script>
+    const input = document.querySelector('#search');
+    const ul = document.querySelector('#content')
+    let value;
+    input.onkeyup = function(ev) {
+        let scriptEle = document.createElement('script');
+        value = input.value;
+        scriptEle.src = "https://www.baidu.com/sugrec?prod=pc&wd="+ value +"&cb=zarek";
+        document.body.appendChild(scriptEle);
+        setTimeout(() => {
+            document.body.removeChild(scriptEle);
+        }, 1000)
+        if (ev.keyCode === 13) {
+                window.location.href = 'https://www.baidu.com/s?wd=' + value;
+            } 
+    }
+    function zarek(arg) {
+        let data = arg.g;
+        ul.innerHTML = '';
+        if (data) {
+            ul.style.display = 'block';
+            data.forEach(element => {
+            let value = element.q
+            let liEle = document.createElement('li');
+            let aEle = document.createElement('a');
+            aEle.href = 'https://www.baidu.com/s?wd=' + value;
+            aEle.target = 'blank';
+            aEle.innerText = value;
+            liEle.appendChild(aEle);
+            ul.appendChild(liEle);
+            });
+        } else {
+            ul.style.display = 'none';
+        }
+    }
+    </script>
+</body>
+</html>

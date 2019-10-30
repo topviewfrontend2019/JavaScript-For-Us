@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>console的谜题</title>
+</head>
+<body>
+
+<script type="text/javascript">
+  const log = function (...arg) {
+    let arg1 = arg.map(item => {
+      if (typeof item === 'object') {
+        let json = JSON.stringify(item)
+        let obj = JSON.parse(json)
+        return obj
+      } else {
+        return item
+      }
+    })
+    console.log.apply(null, arg1)
+  }
+  let a = {a: [1, 2, 3], b: 2, c: true, d: 'before'}
+  log('log改变前：', a)
+  console.log('console改变前：', a)
+  a.a.push(2)
+  a.b = 5
+  a.c = false
+  a.d = 'after'
+  log('log改变后：', a)
+  console.log('console改变后:', a)
+  // 我百度了一下，说是有两种说法
+//  说法一：console.log() 是一个异步的方法
+// 说法二：当在打印一个对象的时候，由于对象中的值是引用的内存中的值，所以就会存在当打印对象的时候，当引用到对象中的值的时候，对象中的值已经发生变化了。所以只在查看时才会读取这个打印的对象，并把此刻相关属性和值显示出来。
+// 不过运行完这些代码后，我觉得第二个说法更准确一些
+</script> 
+</body>
+</html>
